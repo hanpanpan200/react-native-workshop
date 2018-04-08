@@ -3,6 +3,10 @@
 ## How to Run
 
 ### Prepare iOS and Android environment
+[Windows prepare environment](https://segmentfault.com/a/1190000014166744)
+
+[Mac prepare environment](https://segmentfault.com/a/1190000014190384)
+
 
 ### Get codebase
 
