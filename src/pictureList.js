@@ -1,7 +1,10 @@
 import React from 'react';
-import { View, Text, StyleSheet, Button } from 'react-native';
+import { View, Text, StyleSheet, Button, Image, Dimensions } from 'react-native';
 import ImagePicker, { showImagePicker } from "react-native-image-picker";
 import Swiper from 'react-native-swiper';
+import image1 from '../images/image1.png';
+import image2 from '../images/image2.png';
+import image3 from '../images/image3.png';
 
 const styles = StyleSheet.create({
   container: {
@@ -9,29 +12,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  slide1: {
+  slide: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#9DD6EB',
   },
-  slide2: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#97CAE5',
+  image: {
+    width: 400,
+    height: 400,
   },
-  slide3: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#92BBD9',
-  },
-  text: {
-    color: '#fff',
-    fontSize: 30,
-    fontWeight: 'bold',
-  }
 })
 
 const options = {
@@ -64,20 +53,19 @@ export default class PictureList extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text onPress={this.goHowOld}>Press me to go to HowOld page.</Text>
-        <Swiper style={styles.wrapper} showsButtons={true}>
-          <View style={styles.slide1}>
-            <Text style={styles.text}>Hello Swiper</Text>
+        <Swiper showsButtons={true}>
+          <View style={styles.slide}>
+            <Image style={styles.image} source={image1}/>
           </View>
-          <View style={styles.slide2}>
-            <Text style={styles.text}>Beautiful</Text>
+          <View style={styles.slide}>
+            <Image style={styles.image} source={image2}/>
           </View>
-          <View style={styles.slide3}>
-            <Text style={styles.text}>And simple</Text>
+          <View style={styles.slide}>
+            <Image style={styles.image} source={image3}/>
           </View>
         </Swiper>
-
-        <Button onPress={this.showImagePicker} title="Use your own photo" />
+        <Text onPress={this.goHowOld}>Press me to go to HowOld page.</Text>
+        <Button onPress={this.showImagePicker} title="Use your own photo"/>
       </View>
     )
   }
