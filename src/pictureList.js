@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, Button, Image, Dimensions } from 'react-native';
+import { View, Text, StyleSheet, Button, Image, Dimensions, ImageStore } from 'react-native';
 import ImagePicker, { showImagePicker } from "react-native-image-picker";
 import Swiper from 'react-native-swiper';
 import image1 from '../images/image1.png';
@@ -32,9 +32,13 @@ const options = {
 }
 
 export default class PictureList extends React.Component {
-  goHowOld = () => {
-    this.props.navigation.navigate('HowOld')
-  };
+  goHowOld = (image) => {
+    // sent data like {base64Data} with params
+    this.props.navigation.navigate(
+      'HowOld',
+      { selectedImage: image1},
+    )
+  }
 
   showImagePicker = () => {
     ImagePicker.showImagePicker(options, (response) => {
