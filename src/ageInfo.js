@@ -4,17 +4,25 @@ import { GENDER_MAP } from './constant'
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
     position: 'absolute',
-    borderColor: '#5d8fc2',
-    borderWidth: 5,
+    borderColor: '#f2c034',
+    borderWidth: 3,
     zIndex: 100,
+  },
+  textStyle: {
+    fontSize: 12,
+    color: '#fd7039',
+    fontWeight: 'bold',
   }
 });
 
 const AgeInfo = ({ age, infoStyle, gender }) => (
   <View style={[styles.container, infoStyle]}>
-    <Text>年龄：{age}岁</Text>
-    <Text>性别：{GENDER_MAP[gender]}</Text>
+    <Text style={styles.textStyle}>年龄：{age}岁</Text>
+    <Text style={styles.textStyle}>性别：{GENDER_MAP[gender]}</Text>
   </View>
 );
 

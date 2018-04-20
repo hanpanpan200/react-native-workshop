@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image } from 'react-native'
+import { View, StyleSheet, Image } from 'react-native'
 import AgeInfo from './ageInfo'
 import { imageWithThreePeople } from '../images/imageSample'
 import { responseInfo, SCREEN_WIDTH, SCREEN_HEIGHT } from './constant'
@@ -48,7 +48,13 @@ export default class Result extends React.Component {
         width: width * this.imageScale,
         height: height * this.imageScale,
       };
-      return (<AgeInfo infoStyle={style} age={ageInfo.faceAttributes.age} gender={ageInfo.faceAttributes.gender} />)
+      return (
+        <AgeInfo
+        infoStyle={style}
+        age={ageInfo.faceAttributes.age}
+        gender={ageInfo.faceAttributes.gender}
+        key={ageInfo.faceId}/>
+      )
     }))
   }
 
@@ -61,7 +67,6 @@ export default class Result extends React.Component {
             style={styles.image}
             source={{uri:imageWithThreePeople}}
             resizeMode="contain"
-            ref="imageInfo"
           />
         </View>
       </View>
