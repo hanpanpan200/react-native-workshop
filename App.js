@@ -2,8 +2,10 @@ import React from 'react';
 import { StackNavigator } from 'react-navigation';
 import PictureList from './src/pictureList';
 import HowOld from './src/howOld';
+import Result from './src/result';
 
 const App = StackNavigator({
+
   PictureList: {
     screen: PictureList,
     navigationOptions: {
@@ -15,7 +17,14 @@ const App = StackNavigator({
     navigationOptions: {
       title: 'How Old',
     },
-  }
-}) 
+  },
+  Result: {
+    screen: Result,
+    navigationOptions: {
+      title: 'How Old Result',
+    },
+  },
+
+})
 
 export default App

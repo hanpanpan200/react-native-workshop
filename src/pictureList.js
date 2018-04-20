@@ -34,7 +34,7 @@ const options = {
 export default class PictureList extends React.Component {
   goHowOld = () => {
     this.props.navigation.navigate('HowOld')
-  }
+  };
 
   showImagePicker = () => {
     ImagePicker.showImagePicker(options, (response) => {
@@ -45,6 +45,7 @@ export default class PictureList extends React.Component {
       } else if (response.error) {
         console.log('ImagePicker Error: ', response.error);
       } else {
+        this.props.navigation.navigate('Result')
         // TODO: need to check if we send the data or uri to howOld page
       }
     });
