@@ -1,8 +1,9 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image, Dimensions } from 'react-native';
+import { View, Text, StyleSheet, Image } from 'react-native'
+import AgeInfo from './ageInfo'
 import { imageWithThreePeople } from '../images/imageSample'
+import { responseInfo, SCREEN_WIDTH, SCREEN_HEIGHT } from './constant'
 
-const Windows = Dimensions.get('window');
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -13,17 +14,49 @@ const styles = StyleSheet.create({
   image: {
     flex: 1,
     alignSelf: 'stretch',
-    width: Windows.width,
+    width: SCREEN_WIDTH,
     height: 'auto',
   }
 });
 
 export default class Result extends React.Component {
+  constructor(props) {
+    super(props);
+    this.imageScale = 0;
+    this.imageMargin = 0;
+    this.state = {
+      ageInfos: [],
+    }
+  }
+
+  componentDidMount() {
+    Image.getSize(imageWithThreePeople, (imageWidth, imageHeight) => {
+      const scale = SCREEN_WIDTH / imageWidth;
+      this.imageScale = scale;
+      this.imageMargin = (SCREEN_HEIGHT - (imageHeight * scale))/2;
+
+      this.setState({ageInfos: responseInfo});
+    });
+  }
+
+  renderAgaIno() {
+    return (this.state.ageInfos.map((ageInfo) => {
+      const { top, left, width, height} = ageInfo.faceRectangle;
+      const style = {
+        top: (top * this.imageScale) + this.imageMargin,
+        left: left * this.imageScale,
+        width: width * this.imageScale,
+        height: height * this.imageScale,
+      };
+      return (<AgeInfo infoStyle={style} age={ageInfo.faceAttributes.age} gender={ageInfo.faceAttributes.gender} />)
+    }))
+  }
 
   render() {
     return (
       <View style={styles.container}>
         <View style={styles.container}>
+          {this.renderAgaIno()}
           <Image
             style={styles.image}
             source={{uri:imageWithThreePeople}}
