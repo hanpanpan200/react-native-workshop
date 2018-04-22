@@ -33,7 +33,7 @@ const options = {
 
 export default class PictureList extends React.Component {
   goHowOld = (image) => {
-    // sent data like {base64Data} with params
+    // send params like {base64Data}
     this.props.navigation.navigate(
       'HowOld',
       { selectedImage: image1},

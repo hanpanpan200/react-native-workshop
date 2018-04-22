@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet, Image } from 'react-native';
 import RNFetchBlob from 'react-native-fetch-blob';
 
-import image1 from '../images/image1.png';
+import base64Data from './base64';
 
 const styles = StyleSheet.create({
   container: {
@@ -31,20 +31,18 @@ export default class HowOld extends React.Component {
 
   componentDidMount() {
     const { params } = this.props.navigation.state;
-
-    // console.log('iamge base64', params.selectedImage);
-      RNFetchBlob.fetch('POST', 'https://westcentralus.api.cognitive.microsoft.com/face/v1.0/detect?returnFaceId=true&returnFaceAttributes=age', {
-        'Content-Type': 'application/octet-stream',
-        'Ocp-Apim-Subscription-Key': '2b536e05b0df4b98ad0c45101eeba593',
-      }, RNFetchBlob.wrap("params.selectedImage"))
-        .then((res) => {
-          console.log('res', res);
-          console.log(res)
-        })
-        .catch((err) => {
-          console.log('err', err);
-        })
-
+    console.log(base64Data);
+    console.log('iamge base64', params.selectedImage);
+    RNFetchBlob.fetch('POST', 'https://westcentralus.api.cognitive.microsoft.com/face/v1.0/detect?returnFaceId=true&returnFaceAttributes=age', {
+      'Content-Type': 'application/octet-stream',
+      'Ocp-Apim-Subscription-Key': '2b536e05b0df4b98ad0c45101eeba593',
+    }, base64Data)
+      .then((res) => {
+        console.log('res', res);
+      })
+      .catch((err) => {
+        console.log('err', err);
+      })
   }
 
   render() {
@@ -53,8 +51,7 @@ export default class HowOld extends React.Component {
       <View style={styles.container}>
         <Text>How Old Page</Text>
         <View style={styles.imageContainer}>
-          {/* <Image source={params.selectedImage} style={styles.image} /> */}
-          <View style={styles.rectangle}></View>
+           <Image source={{uri: base64Data}} style={styles.image} />
         </View>
       </View>
     )
