@@ -49,7 +49,10 @@ export default class PictureList extends React.Component {
       } else if (response.error) {
         console.log('ImagePicker Error: ', response.error);
       } else {
-        this.props.navigation.navigate('Result')
+        this.props.navigation.navigate('HowOld', {
+          selectedImage: response.uri,
+        });
+
         // TODO: need to check if we send the data or uri to howOld page
       }
     });
