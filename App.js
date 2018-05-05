@@ -27,6 +27,7 @@ const App = StackNavigator({
 }, {
   initialRouteName: 'PictureList',
   navigationOptions: {
+    headerBackTitle: null,
     headerStyle: {
       backgroundColor: COLOR.BLUE,
     },
