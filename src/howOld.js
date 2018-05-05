@@ -1,6 +1,7 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image } from 'react-native';
-import RNFetchBlob from 'react-native-fetch-blob';
+import { View, Text, StyleSheet, Image, Alert } from 'react-native';
+import _ from 'lodash';
+import { howOldCheck } from './utils';
 
 const styles = StyleSheet.create({
   container: {
@@ -26,30 +27,31 @@ const styles = StyleSheet.create({
 });
 
 export default class HowOld extends React.Component {
+  state = {
+    loading: true,
+  }
 
   componentDidMount() {
-    const { params } = this.props.navigation.state;
+    howOldCheck(this.imagePath).then(ageInfo => {
+      console.log('ageInfo====', ageInfo);
+      this.setState({ loading: false });
+    }).catch(() => {
+      this.setState({ loading: false });
+      Alert.alert('获取数据失败，请重试');
+    })
+  }
 
-    RNFetchBlob.fetch('POST', 'https://westcentralus.api.cognitive.microsoft.com/face/v1.0/detect?returnFaceId=true&returnFaceAttributes=age', {
-      'Content-Type': 'application/octet-stream',
-      'Ocp-Apim-Subscription-Key': '2b536e05b0df4b98ad0c45101eeba593',
-    }, RNFetchBlob.wrap(params.selectedImage))
-      .then((res) => {
-
-      })
-      .catch((err) => {
-
-      })
+  get imagePath() {
+    return _.get(this.props, 'navigation.state.params.selectedImage')
   }
 
   render() {
-    const { params } = this.props.navigation.state;
-
+    console.log('this.state=====', this.state);
     return (
       <View style={styles.container}>
         <Text>How Old Page</Text>
         <View style={styles.imageContainer}>
-           <Image source={{uri: params.selectedImage}} style={styles.image} />
+           <Image source={{uri: this.imagePath}} style={styles.image} />
         </View>
       </View>
     )
