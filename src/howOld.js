@@ -1,7 +1,8 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image, Alert } from 'react-native';
+import { View, Text, StyleSheet, Image, Alert, ActivityIndicator } from 'react-native';
 import _ from 'lodash';
 import { howOldCheck } from './utils';
+import { COLOR } from './constants/styleGuide';
 
 const styles = StyleSheet.create({
   container: {
@@ -47,9 +48,9 @@ export default class HowOld extends React.Component {
 
   render() {
     console.log('this.state=====', this.state);
+    const { loading } = this.state;
     return (
       <View style={styles.container}>
-        <Text>How Old Page</Text>
         <View style={styles.imageContainer}>
            <Image source={{uri: this.imagePath}} style={styles.image} />
         </View>

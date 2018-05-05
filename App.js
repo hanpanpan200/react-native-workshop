@@ -3,19 +3,19 @@ import { StackNavigator } from 'react-navigation';
 import PictureList from './src/pictureList';
 import HowOld from './src/howOld';
 import Result from './src/result';
+import { COLOR } from './src/constants/styleGuide';
 
 const App = StackNavigator({
-
   PictureList: {
     screen: PictureList,
     navigationOptions: {
-      title: 'Picture List',
+      title: '首页',
     },
   },
   HowOld: {
     screen: HowOld,
     navigationOptions: {
-      title: 'How Old',
+      title: '怎么老是你',
     },
   },
   Result: {
@@ -24,7 +24,14 @@ const App = StackNavigator({
       title: 'How Old Result',
     },
   },
-
+}, {
+  initialRouteName: 'PictureList',
+  navigationOptions: {
+    headerStyle: {
+      backgroundColor: COLOR.BLUE,
+    },
+    headerTintColor: COLOR.WHITE,
+  }
 })
 
 export default App
