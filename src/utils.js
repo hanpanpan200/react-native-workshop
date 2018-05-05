@@ -2,7 +2,7 @@ import { Platform } from 'react-native';
 import _ from 'lodash';
 import RNFetchBlob from 'react-native-fetch-blob';
 
-const FACE_ID_URL = 'https://westcentralus.api.cognitive.microsoft.com/face/v1.0/detect?returnFaceId=true&returnFaceAttributes=age'
+const FACE_ID_URL = 'https://westcentralus.api.cognitive.microsoft.com/face/v1.0/detect?returnFaceId=true&returnFaceAttributes=age,gender'
 
 export const howOldCheck = imagePath => (
   new Promise((resolve, reject) => {
