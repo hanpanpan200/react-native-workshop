@@ -12,7 +12,7 @@ export const howOldCheck = imagePath => (
       'Ocp-Apim-Subscription-Key': '80a4a3de680a4ccbbf3a58558226c6f0',
     }
     RNFetchBlob.fetch('POST', FACE_ID_URL, uploadConfig, RNFetchBlob.wrap(imageUrl))
-    .then(res=> resolve(res.data))
+    .then(res=> resolve(JSON.parse(res.data)))
     .catch(error => reject())
   })
 )

@@ -42,9 +42,10 @@ export default class HowOld extends React.Component {
   }
 
   componentDidMount() {
-    howOldCheck(this.imagePath).then(ageInfo => {
-      console.log('ageInfo====', ageInfo);
+    const imagePath = this.imagePath;
+    howOldCheck(imagePath).then(ageInfos => {
       this.setState({ loading: false });
+      this.props.navigation.navigate('Result', { imagePath, ageInfos })
     }).catch(() => {
       this.setState({ loading: false });
       Alert.alert('获取数据失败，请重试');

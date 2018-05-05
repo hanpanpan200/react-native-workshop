@@ -1,8 +1,9 @@
 import React from 'react';
 import { View, StyleSheet, Image } from 'react-native'
+import _ from 'lodash';
+import Loading from './Loading';
 import AgeInfo from './ageInfo'
-import { imageWithThreePeople } from '../images/imageSample'
-import { responseInfo, SCREEN_WIDTH, SCREEN_HEIGHT } from './constant'
+import { SCREEN_WIDTH, SCREEN_HEIGHT } from './constant'
 
 const styles = StyleSheet.create({
   container: {
@@ -10,7 +11,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center'
   },
-
   image: {
     flex: 1,
     alignSelf: 'stretch',
@@ -20,27 +20,29 @@ const styles = StyleSheet.create({
 });
 
 export default class Result extends React.Component {
-  constructor(props) {
-    super(props);
-    this.imageScale = 0;
-    this.imageMargin = 0;
-    this.state = {
-      ageInfos: [],
-    }
+  state = {
+    loading: true,
   }
-
   componentDidMount() {
-    Image.getSize(imageWithThreePeople, (imageWidth, imageHeight) => {
+    Image.getSize(this.imagePath, (imageWidth, imageHeight) => {
       const scale = SCREEN_WIDTH / imageWidth;
       this.imageScale = scale;
       this.imageMargin = (SCREEN_HEIGHT - (imageHeight * scale))/2;
-
-      this.setState({ageInfos: responseInfo});
+      this.setState({ loading: false })
     });
   }
 
-  renderAgaIno() {
-    return (this.state.ageInfos.map((ageInfo) => {
+  get imagePath() {
+    return _.get(this.props, 'navigation.state.params.imagePath')
+  }
+
+  get ageInfos() {
+    return _.get(this.props, 'navigation.state.params.ageInfos')
+  }
+
+  renderAgeInfo() {
+    if (this.state.loading) return null;
+    return (this.ageInfos.map((ageInfo) => {
       const { top, left, width, height} = ageInfo.faceRectangle;
       const style = {
         top: (top * this.imageScale) + this.imageMargin,
@@ -50,10 +52,11 @@ export default class Result extends React.Component {
       };
       return (
         <AgeInfo
-        infoStyle={style}
-        age={ageInfo.faceAttributes.age}
-        gender={ageInfo.faceAttributes.gender}
-        key={ageInfo.faceId}/>
+          infoStyle={style}
+          age={ageInfo.faceAttributes.age}
+          gender={ageInfo.faceAttributes.gender}
+          key={ageInfo.faceId}
+        />
       )
     }))
   }
@@ -61,14 +64,12 @@ export default class Result extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <View style={styles.container}>
-          {this.renderAgaIno()}
-          <Image
-            style={styles.image}
-            source={{uri:imageWithThreePeople}}
-            resizeMode="contain"
-          />
-        </View>
+        {this.renderAgeInfo()}
+        <Image
+          style={styles.image}
+          source={{uri: this.imagePath}}
+          resizeMode="contain"
+        />
       </View>
     )
   }
