@@ -2,9 +2,11 @@ import React from 'react';
 import { View, Text, StyleSheet, Button, Image, Dimensions, ImageStore } from 'react-native';
 import ImagePicker, { showImagePicker } from "react-native-image-picker";
 import Swiper from 'react-native-swiper';
+import { COLOR } from './constants/styleGuide';
 import image1 from '../images/image1.png';
 import image2 from '../images/image2.png';
 import image3 from '../images/image3.png';
+import { SCREEN_WIDTH } from './constant';
 
 const styles = StyleSheet.create({
   container: {
@@ -18,8 +20,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   image: {
-    width: 400,
-    height: 400,
+    width: SCREEN_WIDTH,
+    height: SCREEN_WIDTH,
   },
 })
 
@@ -33,7 +35,6 @@ const options = {
 
 export default class PictureList extends React.Component {
   goHowOld = (image) => {
-    // send params like {base64Data}
     this.props.navigation.navigate(
       'HowOld',
       { selectedImage: image1},
@@ -52,8 +53,6 @@ export default class PictureList extends React.Component {
         this.props.navigation.navigate('HowOld', {
           selectedImage: response.uri,
         });
-
-        // TODO: need to check if we send the data or uri to howOld page
       }
     });
   }
@@ -61,7 +60,7 @@ export default class PictureList extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <Swiper showsButtons={true}>
+        <Swiper activeDotColor={COLOR.BLUE}>
           <View style={styles.slide}>
             <Image style={styles.image} source={image1}/>
           </View>
