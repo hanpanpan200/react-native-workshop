@@ -1,7 +1,7 @@
 import { AppRegistry, StatusBar } from 'react-native';
 import App from './App';
 
-GLOBAL.XMLHttpRequest = GLOBAL.originalXMLHttpRequest || GLOBAL.XMLHttpRequest;
+// GLOBAL.XMLHttpRequest = GLOBAL.originalXMLHttpRequest || GLOBAL.XMLHttpRequest;
 
 StatusBar.setBarStyle('light-content')
 

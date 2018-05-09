@@ -1,11 +1,8 @@
 import React from 'react';
-import { View, Text, StyleSheet, Button, Image, Dimensions, ImageStore } from 'react-native';
-import ImagePicker, { showImagePicker } from "react-native-image-picker";
+import { View, Text, StyleSheet, Button, Image } from 'react-native';
+import ImagePicker from 'react-native-image-picker';
 import Swiper from 'react-native-swiper';
 import { COLOR } from './constants/styleGuide';
-import image1 from '../images/image1.png';
-import image2 from '../images/image2.png';
-import image3 from '../images/image3.png';
 import { SCREEN_WIDTH } from './constant';
 
 const styles = StyleSheet.create({
@@ -33,11 +30,21 @@ const options = {
   }
 }
 
+const defaultImages = [
+  'https://raw.githubusercontent.com/ThoughtWorksWuhanUI/react-native-workshop/master/images/image1%402x.png',
+  'https://raw.githubusercontent.com/ThoughtWorksWuhanUI/react-native-workshop/master/images/image2%402x.png',
+  'https://raw.githubusercontent.com/ThoughtWorksWuhanUI/react-native-workshop/master/images/image3%402x.png'
+];
+
 export default class PictureList extends React.Component {
-  goHowOld = (image) => {
+  state = {
+    currentImageIndex: 0,
+  }
+
+  goHowOld = () => {
     this.props.navigation.navigate(
       'HowOld',
-      { selectedImage: image1},
+      { selectedImage: defaultImages[this.state.currentImageIndex]},
     )
   }
 
@@ -57,19 +64,20 @@ export default class PictureList extends React.Component {
     });
   }
 
+  onMomentumScrollEnd = (e, state) => this.setState({
+    currentImageIndex: state.index
+  })
+
+
   render() {
     return (
       <View style={styles.container}>
-        <Swiper activeDotColor={COLOR.BLUE}>
-          <View style={styles.slide}>
-            <Image style={styles.image} source={image1}/>
-          </View>
-          <View style={styles.slide}>
-            <Image style={styles.image} source={image2}/>
-          </View>
-          <View style={styles.slide}>
-            <Image style={styles.image} source={image3}/>
-          </View>
+        <Swiper activeDotColor={COLOR.BLUE}  onMomentumScrollEnd ={this.onMomentumScrollEnd}>
+          {defaultImages.map((uri) => (
+            <View key={uri} style={styles.slide}>
+              <Image style={styles.image} source={{uri}}/>
+            </View>
+          ))}
         </Swiper>
         <Text onPress={this.goHowOld}>Press me to go to HowOld page.</Text>
         <Button onPress={this.showImagePicker} title="Use your own photo"/>
