@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, Button, Image } from 'react-native';
 import ImagePicker from 'react-native-image-picker';
 import Swiper from 'react-native-swiper';
 import { COLOR } from './constants/styleGuide';
-import { SCREEN_WIDTH } from './constant';
+import { SCREEN_WIDTH } from './constants/constant';
 
 const styles = StyleSheet.create({
   container: {

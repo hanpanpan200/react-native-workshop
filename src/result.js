@@ -3,7 +3,7 @@ import { View, StyleSheet, Image } from 'react-native'
 import _ from 'lodash';
 import Loading from './Loading';
 import AgeInfo from './ageInfo'
-import { SCREEN_WIDTH, SCREEN_HEIGHT } from './constant'
+import { SCREEN_WIDTH, SCREEN_HEIGHT } from './constants/constant'
 
 const styles = StyleSheet.create({
   container: {

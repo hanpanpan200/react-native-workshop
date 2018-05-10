@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import { GENDER_MAP } from './constant'
+import { GENDER_MAP } from './constants/constant'
 
 const styles = StyleSheet.create({
   container: {
