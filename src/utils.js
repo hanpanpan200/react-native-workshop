@@ -1,4 +1,5 @@
-import { Platform } from 'react-native';
+import { Platform, Image } from 'react-native';
+import { SCREEN_WIDTH } from './constants/constant'
 import _ from 'lodash';
 import RNFetchBlob from 'react-native-fetch-blob';
 
@@ -14,7 +15,12 @@ export const howOldCheck = imagePath => (
       }
 
       RNFetchBlob.fetch('POST', FACE_ID_URL, uploadConfig, RNFetchBlob.wrap(imageUrl))
-        .then(res=> resolve(JSON.parse(res.data)))
+        .then(res=> {
+          if(!res.data) {
+            return reject("解析图片失败")
+          }
+          return resolve(JSON.parse(res.data))
+        })
         .catch(error => reject())
     } else {
       fetch(FACE_ID_URL, {
@@ -30,4 +36,13 @@ export const howOldCheck = imagePath => (
         .catch((error) => reject());
     }
   })
-)
+);
+
+export const calculateImageScale = image => (
+  new Promise((resolve, reject) => {
+    Image.getSize(image, imageWidth => {
+      const scale = SCREEN_WIDTH / imageWidth;
+      resolve(scale);
+    }, err => reject(err));
+  })
+);
