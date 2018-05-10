@@ -1,9 +1,11 @@
 import React from 'react';
 import { View, Text, StyleSheet, Image, Alert, ActivityIndicator, TouchableOpacity } from 'react-native';
 import _ from 'lodash';
-import { howOldCheck } from './utils';
-import { COLOR } from './constants/styleGuide';
 import Loading from './Loading';
+import AgeInfo from './ageInfo';
+import { howOldCheck, calculateImageScale } from './utils';
+import { COLOR } from './constants/styleGuide';
+import { SCREEN_WIDTH } from './constants/constant';
 
 const styles = StyleSheet.create({
   container: {
@@ -11,14 +13,18 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   imageContainer: {
+    flex: 1,
     marginTop: 50,
   },
   image: {
-    width: 400,
-    height: 400,
+    flex: 1,
+    alignSelf: 'stretch',
+    width: SCREEN_WIDTH,
+    height: 'auto',
   },
   buttonContainer: {
-    marginTop: 50,
+    marginTop: 20,
+    marginBottom: 20,
     width: 250,
     height: 50,
     borderRadius: 5,
@@ -33,7 +39,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
     color: COLOR.WHITE,
-  }, 
+  },
 });
 
 export default class HowOld extends React.Component {
@@ -43,10 +49,14 @@ export default class HowOld extends React.Component {
 
   componentDidMount() {
     const imagePath = this.imagePath;
-    howOldCheck(imagePath).then(ageInfos => {
+
+    Promise.all([howOldCheck(imagePath), calculateImageScale(imagePath)]).then(([ageInfos, imageScale]) => {
+      this.ageInfos = ageInfos;
+      this.imageScale = imageScale;
       this.setState({ loading: false });
-      this.props.navigation.navigate('Result', { imagePath, ageInfos })
     }).catch(() => {
+      this.ageInfos = [];
+      this.imageScale = 0;
       this.setState({ loading: false });
       Alert.alert('获取数据失败，请重试');
     })
@@ -60,13 +70,39 @@ export default class HowOld extends React.Component {
     this.props.navigation.goBack()
   }
 
+  renderAgeInfo() {
+    if(_.isEmpty(this.ageInfos)) {
+      return
+    }
+
+    return (this.ageInfos.map((ageInfo) => {
+      const { top, left, width, height} = ageInfo.faceRectangle;
+      const style = {
+        top: top * this.imageScale + 50,
+        left: left * this.imageScale,
+        width: width * this.imageScale,
+        height: height * this.imageScale,
+      };
+      return (
+          <AgeInfo
+              infoStyle={style}
+              age={ageInfo.faceAttributes.age}
+              gender={ageInfo.faceAttributes.gender}
+              key={ageInfo.faceId}
+          />
+      )
+    }))
+  }
+
   render() {
     const { loading } = this.state;
     return (
       <View style={styles.container}>
         {loading && <Loading text="分析中" />}
         <View style={styles.imageContainer}>
-           <Image source={{uri: this.imagePath}} style={styles.image} />
+           {!loading && this.renderAgeInfo()}
+           <Image source={{uri: this.imagePath}} style={styles.image}
+                  resizeMode="contain"/>
         </View>
         <TouchableOpacity style={[styles.buttonContainer, loading ? styles.disabled : null]} onPress={this.redirectToHome}>
           <Text style={styles.buttonText}>重新选一张</Text>

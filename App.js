@@ -2,7 +2,6 @@ import React from 'react';
 import { StackNavigator } from 'react-navigation';
 import PictureList from './src/pictureList';
 import HowOld from './src/howOld';
-import Result from './src/result';
 import { COLOR } from './src/constants/styleGuide';
 
 const App = StackNavigator({
@@ -16,12 +15,6 @@ const App = StackNavigator({
     screen: HowOld,
     navigationOptions: {
       title: '怎么老是你',
-    },
-  },
-  Result: {
-    screen: Result,
-    navigationOptions: {
-      title: 'How Old Result',
     },
   },
 }, {
