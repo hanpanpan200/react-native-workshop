@@ -21,8 +21,7 @@ const styles = StyleSheet.create({
 
 const AgeInfo = ({ age, infoStyle, gender }) => (
   <View style={[styles.container, infoStyle]}>
-    <Text style={styles.textStyle}>年龄：{age}岁</Text>
-    <Text style={styles.textStyle}>性别：{GENDER_MAP[gender]}</Text>
+    <Text style={styles.textStyle}>{GENDER_MAP[gender]} {age}岁</Text>
   </View>
 );
 
