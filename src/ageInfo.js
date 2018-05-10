@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     position: 'absolute',
     borderWidth: 3,
-    borderColor: COLOR.RED,
+    borderColor: COLOR.GREEN,
     zIndex: 100,
   },
   textStyle: {
@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 8,
     borderRadius: 4,
-    backgroundColor: COLOR.RED,
+    backgroundColor: COLOR.GREEN,
   },
   triangle: {
     position: 'absolute',
@@ -38,14 +38,14 @@ const styles = StyleSheet.create({
     backgroundColor: COLOR.TRANSPARENT,
     borderLeftColor: COLOR.TRANSPARENT,
     borderRightColor: COLOR.TRANSPARENT,
-    borderTopColor: COLOR.RED,
+    borderTopColor: COLOR.GREEN,
   },
 });
 
 const AgeInfo = ({ age, infoStyle, gender }) => (
   <View style={[styles.container, infoStyle]}>
     <View style={[styles.infoContainer, {bottom: infoStyle.height + 5}]}>
-      <Text style={styles.textStyle}>{GENDER_MAP[gender]} {age}岁</Text>
+      <Text style={styles.textStyle}>{GENDER_MAP[gender]}{age}岁</Text>
       <View style={styles.triangle}></View>
     </View>
   </View>
