@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
   },
 })
 
-const options = {
+const IMAGE_PICKER_OPTIONS = {
   title: 'Use your own photo',
   storageOptions: {
     skipBackup: true,
@@ -30,7 +30,7 @@ const options = {
   }
 }
 
-const defaultImages = [
+const DEFAULT_IMAGES = [
   'https://raw.githubusercontent.com/ThoughtWorksWuhanUI/react-native-workshop/master/images/image1%402x.png',
   'https://raw.githubusercontent.com/ThoughtWorksWuhanUI/react-native-workshop/master/images/image2%402x.png',
   'https://raw.githubusercontent.com/ThoughtWorksWuhanUI/react-native-workshop/master/images/image3%402x.png'
@@ -44,12 +44,12 @@ export default class PictureList extends React.Component {
   goHowOld = () => {
     this.props.navigation.navigate(
       'HowOld',
-      { selectedImage: defaultImages[this.state.currentImageIndex]},
+      { selectedImage: DEFAULT_IMAGES[this.state.currentImageIndex]},
     )
   }
 
   showImagePicker = () => {
-    ImagePicker.showImagePicker(options, (response) => {
+    ImagePicker.showImagePicker(IMAGE_PICKER_OPTIONS, (response) => {
       console.log('Response = ', response);
 
       if (response.didCancel) {
@@ -73,7 +73,7 @@ export default class PictureList extends React.Component {
     return (
       <View style={styles.container}>
         <Swiper activeDotColor={COLOR.BLUE}  onMomentumScrollEnd ={this.onMomentumScrollEnd}>
-          {defaultImages.map((uri) => (
+          {DEFAULT_IMAGES.map((uri) => (
             <View key={uri} style={styles.slide}>
               <Image style={styles.image} source={{uri}}/>
             </View>
