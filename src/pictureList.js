@@ -23,11 +23,14 @@ const styles = StyleSheet.create({
 })
 
 const IMAGE_PICKER_OPTIONS = {
-  title: 'Use your own photo',
+  title: '自选图片',
   storageOptions: {
     skipBackup: true,
     path: 'images',
-  }
+  },
+  cancelButtonTitle: '取消',
+  takePhotoButtonTitle: '拍照',
+  chooseFromLibraryButtonTitle: '选取照片',
 }
 
 const DEFAULT_IMAGES = [
@@ -79,8 +82,8 @@ export default class PictureList extends React.Component {
             </View>
           ))}
         </Swiper>
-        <Text onPress={this.goHowOld}>Press me to go to HowOld page.</Text>
-        <Button onPress={this.showImagePicker} title="Use your own photo"/>
+        <Text onPress={this.goHowOld}>点击查看年龄</Text>
+        <Button onPress={this.showImagePicker} title="自选图片"/>
       </View>
     )
   }
