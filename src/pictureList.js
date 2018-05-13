@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, Button, Image } from 'react-native';
+import { View, Text, StyleSheet, Button, Image, TouchableWithoutFeedback } from 'react-native';
 import ImagePicker from 'react-native-image-picker';
 import Swiper from 'react-native-swiper';
 import { COLOR } from './constants/styleGuide';
@@ -40,16 +40,7 @@ const DEFAULT_IMAGES = [
 ];
 
 export default class PictureList extends React.Component {
-  state = {
-    currentImageIndex: 0,
-  }
-
-  goHowOld = () => {
-    this.props.navigation.navigate(
-      'HowOld',
-      { selectedImage: DEFAULT_IMAGES[this.state.currentImageIndex]},
-    )
-  }
+  goHowOld = (selectedImage) => this.props.navigation.navigate('HowOld', { selectedImage })
 
   showImagePicker = () => {
     ImagePicker.showImagePicker(IMAGE_PICKER_OPTIONS, (response) => {
@@ -67,22 +58,18 @@ export default class PictureList extends React.Component {
     });
   }
 
-  onMomentumScrollEnd = (e, state) => this.setState({
-    currentImageIndex: state.index
-  })
-
-
   render() {
     return (
       <View style={styles.container}>
-        <Swiper activeDotColor={COLOR.BLUE}  onMomentumScrollEnd ={this.onMomentumScrollEnd}>
+        <Swiper activeDotColor={COLOR.BLUE}>
           {DEFAULT_IMAGES.map((uri) => (
-            <View key={uri} style={styles.slide}>
-              <Image style={styles.image} source={{uri}}/>
-            </View>
+            <TouchableWithoutFeedback key={uri} onPress={() => this.goHowOld(uri)}>
+              <View style={styles.slide}>
+                <Image style={styles.image} source={{uri}}/>
+              </View>
+            </TouchableWithoutFeedback>
           ))}
         </Swiper>
-        <Text onPress={this.goHowOld}>点击查看年龄</Text>
         <Button onPress={this.showImagePicker} title="自选图片"/>
       </View>
     )
