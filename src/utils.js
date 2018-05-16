@@ -21,9 +21,8 @@ export const howOldCheck = imagePath => (
           const faceJsonInfo = _.isEmpty(faceInfo) ? null : JSON.parse(faceInfo);
           const error = _.get(faceJsonInfo, 'error');
 
-          if(_.isEmpty(faceJsonInfo) || !_.isEmpty(error)) {
-            return reject();
-          }
+          if(!_.isEmpty(error)) return reject();
+          if (_.isEmpty(faceJsonInfo)) return reject('图片中没有人哦！');
           return resolve(faceJsonInfo);
         })
         .catch(error => reject())
