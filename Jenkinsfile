@@ -15,11 +15,6 @@ pipeline {
               sh 'yarn install'
           }
       }
-      stage('lint') {
-          steps {
-              sh 'yarn run lint'
-          }
-      }
       stage('test') {
           steps {
               sh 'yarn run test'
