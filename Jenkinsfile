@@ -20,6 +20,7 @@ pipeline {
             branch 'master'
         }
         steps {
+            sh 'chmod u+x ./scripts/build-android.sh'
             sh './scripts/build-android.sh'
         }
       }
