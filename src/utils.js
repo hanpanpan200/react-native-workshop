@@ -17,10 +17,14 @@ export const howOldCheck = imagePath => (
 
       RNFetchBlob.fetch('POST', FACE_ID_URL, uploadConfig, RNFetchBlob.wrap(imageUrl))
         .then(res=> {
-          if(!res.data) {
-            return reject("解析图片失败")
+          const faceInfo = _.get(res, 'data');
+          const faceJsonInfo = _.isEmpty(faceInfo) ? null : JSON.parse(faceInfo);
+          const error = _.get(faceJsonInfo, 'error');
+
+          if(_.isEmpty(faceJsonInfo) || !_.isEmpty(error)) {
+            return reject();
           }
-          return resolve(JSON.parse(res.data))
+          return resolve(faceJsonInfo);
         })
         .catch(error => reject())
     } else {
@@ -39,7 +43,7 @@ export const howOldCheck = imagePath => (
           }
           return reject()
         })
-        .catch((error) => reject(error));
+        .catch((error) => reject());
     }
   })
 );
