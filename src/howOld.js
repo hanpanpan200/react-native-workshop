@@ -54,11 +54,11 @@ export default class HowOld extends React.Component {
       this.ageInfos = ageInfos;
       this.imageScale = imageScale;
       this.setState({ loading: false });
-    }).catch(() => {
+    }).catch(errorMessage => {
       this.ageInfos = [];
       this.imageScale = 0;
       this.setState({ loading: false });
-      Alert.alert('获取数据失败，请重试');
+      Alert.alert(errorMessage || '获取数据失败，请重试');
     })
   }
 
