@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, Button, Image, TouchableWithoutFeedback } from 'react-native';
+import { View, Text, StyleSheet, Button, Image, TouchableWithoutFeedback, Alert } from 'react-native';
 import ImagePicker from 'react-native-image-picker';
 import Swiper from 'react-native-swiper';
 import { COLOR } from './constants/styleGuide';
@@ -39,18 +39,23 @@ const DEFAULT_IMAGES = [
   'https://raw.githubusercontent.com/ThoughtWorksWuhanUI/react-native-workshop/master/images/image3%402x.png'
 ];
 
+const MAX_IMAGE_FILE_SIZE = 4 * 1000 * 1000;
+
 export default class PictureList extends React.Component {
   goHowOld = (selectedImage) => this.props.navigation.navigate('HowOld', { selectedImage })
 
   showImagePicker = () => {
     ImagePicker.showImagePicker(IMAGE_PICKER_OPTIONS, (response) => {
       console.log('Response = ', response);
-
+      
       if (response.didCancel) {
         console.log('User cancelled image picker');
       } else if (response.error) {
         console.log('ImagePicker Error: ', response.error);
       } else {
+        if (response.fileSize > MAX_IMAGE_FILE_SIZE) {
+          return Alert.alert('请选择4M以内的图片~');
+        }
         this.props.navigation.navigate('HowOld', {
           selectedImage: response.uri,
         });
