@@ -15,12 +15,12 @@ pipeline {
               sh 'yarn install'
           }
       }
-      stage('Deploy for development') {
+      stage('Deploy for beta testing') {
         when {
-            branch 'dev'
+            branch 'master'
         }
         steps {
-            echo 'Deploy for development'
+            sh './build-android.sh'
         }
       }
       stage('Deploy for production') {
