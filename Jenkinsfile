@@ -20,7 +20,7 @@ pipeline {
             branch 'master'
         }
         steps {
-            sh './build-android.sh'
+            sh './scripts/build-android.sh'
         }
       }
       stage('Deploy for production') {
